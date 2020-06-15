@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>raf</title>
+</head>
+<body>
+    <!-- 页面上绘制一个从0-100的进度条 -->
+    <div id="progress" style="background-color: aqua; width: 0;height: 20px;"></div>
+    <button id="btn">开始</button>
+    <script>
+        let start;
+        btn.addEventListener('click', () => {
+            progress.style.width = 0;
+            let current = Date.now()
+            start = current
+            timer = requestAnimationFrame(handleProgress)
+        })
+
+        function handleProgress () {
+            progress.style.width = `${progress.offsetWidth + 1}px`;
+            progress.innerHTML = `${progress.offsetWidth}%`;
+            // 没加载到100，继续执行raf
+            if (progress.offsetWidth < 100) {
+                let current = Date.now()
+                // 开始准备执行的时候到真正执行时间的时间差
+                console.log(current - start);
+                // 重置start
+                start = current;
+                requestAnimationFrame(handleProgress);
+            }
+        }
+    </script>
+</body>
+</html>
